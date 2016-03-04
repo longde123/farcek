@@ -1,0 +1,12 @@
+{
+  "name": "farcek",
+  "url" : "",
+  "license": "MIT",
+  "tags": ["parsers"],
+  "description": "A simple parser combinator class inspired by Parsec.",
+  "version": "1.0.0",
+  "classPath": "src/",
+  "releasenote": "Initial Release.",
+  "contributors": ["asciiascetic"],
+  "dependencies": {}
+}
