@@ -1,3 +1,6 @@
+
+import haxe.ds.Option;
+
 typedef Parsed<A> = {parsed : A, leftOver : String}
 
 class Parser<A> {
@@ -7,7 +10,7 @@ class Parser<A> {
   public function parse(s) {
     return parser(s);
   }
-  
+
   public function new (p : String -> Array<Parsed<A>>) {
     parser = p;
   }
@@ -159,4 +162,12 @@ class Parser<A> {
 	  });
       });
   }
+
+
+  public static function run<B> (p : Parser<B>, s : String) : Option<B> {
+    var res = p.parse(s);
+    return if (res.length == 0 || res[0].leftOver.length > 0) None
+      else Some(res[0].parsed);
+  }
+  
 }
