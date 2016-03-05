@@ -24,6 +24,10 @@ class Parser<A> {
       });
   }
 
+  public function then<B> ( p : Parser<B>) : Parser<B> {
+    return bind(function (a) {return p;});
+  }
+  
   public function plus (p2: Parser<A>) : Parser<A> {
     return new Parser(function (s) {
 	return parse(s).concat( p2.parse(s) );
