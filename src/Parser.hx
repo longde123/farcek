@@ -82,6 +82,17 @@ class Parser<A> {
       });
   }
 
+  public static function oneOf (s : String) : Parser<String> {
+    return sat(function (c) {return s.indexOf(c) > -1;});
+  }  
+  
+  // assumes that a.length > 0
+  public static function sum<B> (a : Array<Parser<B>>) : Parser<B> {
+    var f = a.pop();
+    for (p in a) f = f.plus(p);
+    return f;
+  }
+
   public static function char (c : String) : Parser<String> {
     return sat(function (c1) {return c1 == c;});
   }
@@ -167,6 +178,35 @@ class Parser<A> {
       });
   }
 
+  public static function chainOpRight<B> (b : Parser<B>,
+					  o : Parser<B -> B -> B>) : Parser<B> {
+    var manyOps = b.bind(function (b1) {
+	return o.bind(function (op) {
+	    return result( op.bind(b1) );
+	  });
+      }).many();
+
+    return manyOps.bind(function (ops) {
+	return b.bind(function (b1) {
+	    var res = b1;
+	    ops.reverse();
+	    for (op in ops) res = op(res);
+	    return result(res);
+	  });
+      });
+  }
+
+
+  public static function sepBy<B> (b : Parser<B>,
+				   sep : Parser<String>) : Parser<Array<B>> {
+    var tail = sep.then(b).many();
+    return b.bind(function (b1) {
+	return tail.bind(function (a) {
+	    a.unshift( b1 );
+	    return result(a);
+	  });
+      });
+  }
 
   public static function run<B> (p : Parser<B>, s : String) : Option<B> {
     var res = p.parse(s);

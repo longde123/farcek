@@ -96,10 +96,10 @@ class Main {
 
 - [ ] Documentation
 - [ ] Unit Tests
-- [ ] Add `Parser.chainOpRight`
-- [ ] Add `Parser.sepBy`
-- [ ] Add `Parser.oneOf` 
-- [ ] Add equivalent of `(>>)`, `sequence` method maybe
+- [X] Add `Parser.chainOpRight`
+- [X] Add `Parser.sepBy`
+- [X] Add `Parser.oneOf` 
+- [X] Add equivalent of `(>>)`, `Parser.then` method maybe
 
 
 
