@@ -1,6 +1,6 @@
 {
   "name": "farcek",
-  "url" : "",
+  "url" : "https://github.com/asciiascetic/farcek",
   "license": "MIT",
   "tags": ["parsers"],
   "description": "A simple parser combinator class inspired by Parsec.",
