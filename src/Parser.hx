@@ -144,8 +144,8 @@ class Parser<A> {
 	});
   }
 
-  public static function spaces () : Parser<Array<String>> {
-    return char(" ").many1();
+  public static function spaces () : Parser<String> {
+    return char(" ").many1().fmap(function (s) {return s.join("");});
   }
 
   public static function bracket<B> (o : Parser<String>,
