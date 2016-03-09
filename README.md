@@ -100,6 +100,8 @@ class Main {
 - [X] Add `Parser.sepBy`
 - [X] Add `Parser.oneOf` 
 - [X] Add equivalent of `(>>)`, `Parser.then` method maybe
+- [X] `choice` and `stringChoice` combinators
+- [ ] `try` and `lookAhead` combinators
 
 
 

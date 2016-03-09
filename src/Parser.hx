@@ -1,6 +1,8 @@
 
 import haxe.ds.Option;
 
+using Lambda; 
+
 typedef Parsed<A> = {parsed : A, leftOver : String}
 
 class Parser<A> {
@@ -87,12 +89,16 @@ class Parser<A> {
   }  
   
   // assumes that a.length > 0
-  public static function sum<B> (a : Array<Parser<B>>) : Parser<B> {
+  public static function choice<B> (a : Array<Parser<B>>) : Parser<B> {
     var f = a.pop();
     for (p in a) f = f.plus(p);
     return f;
   }
 
+  public static function stringChoice (a : Array<String>) : Parser<String> {
+    return choice (a.map(Parser.string));
+  }
+  
   public static function char (c : String) : Parser<String> {
     return sat(function (c1) {return c1 == c;});
   }
@@ -208,10 +214,13 @@ class Parser<A> {
       });
   }
 
+
   public static function run<B> (p : Parser<B>, s : String) : Option<B> {
     var res = p.parse(s);
     return if (res.length == 0 || res[0].leftOver.length > 0) None
       else Some(res[0].parsed);
   }
+
+
   
 }
