@@ -4,9 +4,9 @@
   "license": "MIT",
   "tags": ["parsers"],
   "description": "A simple parser combinator class inspired by Parsec.",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "classPath": "src/",
-  "releasenote": "API change. Parser.spaces is now of type Parser<String>.",
+  "releasenote": "API change. Parser.sum is now Parser.choice.",
   "contributors": ["asciiascetic"],
   "dependencies": {}
 }
