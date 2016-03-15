@@ -31,18 +31,19 @@ class Parser<A> {
   }
   
   public function plus (p2: Parser<A>) : Parser<A> {
+    var that = this;
     return new Parser(function (s) {
-	return parse(s).concat( p2.parse(s) );
+	return that.parse(s).concat( p2.parse(s) );
       });
   }
 
   public function many () : Parser<Array<A>> {
-    var rep = bind(function (r) {
-	return many().bind(function (rs) {
-	    return result([r].concat(rs));
+    var rep = bind( function ( r ) {
+	return many().bind(function ( rs ) {
+	    return result([r].concat( rs ));
 	  });
       });
-    return rep.plus(result([]));
+    return rep.plus( result( [] ));
   }
 
   public function many1 () : Parser<Array<A>> {
@@ -55,6 +56,10 @@ class Parser<A> {
 
   public function fmap<B>  (f : A -> B) : Parser<B> {
     return bind(function (a) {return result( f( a ));});
+  }
+
+  public function tryWithDefault (v : A) : Parser<A> {
+    return plus( result( v ));
   }
 
   // static utility functions
@@ -96,7 +101,7 @@ class Parser<A> {
   }
 
   public static function stringChoice (a : Array<String>) : Parser<String> {
-    return choice (a.map(Parser.string));
+    return choice( a.map( Parser.string ));
   }
   
   public static function char (c : String) : Parser<String> {
@@ -151,7 +156,7 @@ class Parser<A> {
   }
 
   public static function spaces () : Parser<String> {
-    return char(" ").many1().fmap(function (s) {return s.join("");});
+    return char(" ").many().fmap(function (s) {return s.join("");});
   }
 
   public static function bracket<B> (o : Parser<String>,
@@ -217,7 +222,7 @@ class Parser<A> {
 
   public static function run<B> (p : Parser<B>, s : String) : Option<B> {
     var res = p.parse(s);
-    return if (res.length == 0 || res[0].leftOver.length > 0) None
+    return if (res.length == 0 /*|| res[0].leftOver.length > 0 */) None
       else Some(res[0].parsed);
   }
 
