@@ -95,7 +95,7 @@ class Parser<A> {
   
   // assumes that a.length > 0
   public static function choice<B> (a : Array<Parser<B>>) : Parser<B> {
-    var f = a.pop();
+    var f = a.shift();
     for (p in a) f = f.plus(p);
     return f;
   }
