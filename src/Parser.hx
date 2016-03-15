@@ -100,6 +100,11 @@ class Parser<A> {
     return f;
   }
 
+  public static function choiceWithDefault<B> (a : Array<Parser<B>>,
+					       b : B) : Parser<B> {
+    return choice( a ).tryWithDefault( b );
+  }
+
   public static function stringChoice (a : Array<String>) : Parser<String> {
     return choice( a.map( Parser.string ));
   }
