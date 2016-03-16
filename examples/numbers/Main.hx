@@ -120,5 +120,6 @@ class Main {
     tryit("seventy-two thousand seven hundred twenty-one", 72721);
     tryit("five million two hundred thirty-eight thousand nine hundred seventy-six", 5238976);
     tryit("four hundred million six hundred ninety-nine", 400000699);
+    tryit("33 million 4 hundred sixteen thousand 1", 33416001);
   }
 }
