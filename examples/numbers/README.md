@@ -32,45 +32,44 @@ var hypenatedNumber = multOfTen.bind(function (m) {
 ```
 
 Lets break it down.  The definition of `hypenatedNumber` makes use of
-a couple of other parsers defined earlier in the file.  
+a couple of other parsers that are defined earlier in the file.  
 
-First, the `ones` parser accpepts any of the the strings `"one"`
-,`"two"`, and up to `"nine"` and returns the respective integer values
-designated by these words.  Next, the `multOfTen` parser operates
-similarly to `ones`, but it accpets the words `"twenty"`, `"thirty"`,
-and so on up to `"ninety"`, returning `20`, `30`, ... up to `90`
-respectively.
+First, the `ones` parser accepts any of the the strings `"one"`
+,`"two"`, up to `"nine"` and returns the respectively designated
+integer values.  Next, the `multOfTen` parser operates similarly to
+`ones`, but it accpets the words `"twenty"`, `"thirty"`, and so on up
+to `"ninety"`, returning `20`, `30`, ... up to `90` respectively.
 
-So th parse a string like `"twenty-five"` we first have to parse a
+In order to parse a string like `"twenty-five"` we must first parse a
 multiple of ten with `multOfTen`. If `multOfTen` parses successfully,
-we end up with an integer, call it `m` and some leftover input.  So we
+we end up with an integer, call it `m`, and some leftover input.  We
 pass the result of our `multOfTen` parser, using `bind`, to a function
-that accepts `m`, allowing us to make use of it later on.  
+that accepts `m`, allowing us to make use of that value later on.  
 
-We now must keep parsing. Hopefully, the next thing we see is a `"-"`
-so the parser we return inside the `bind` argument starts with
-`P.string("-")`.  
+We now must keep parsing. Hopefully, the next thing we see after our
+multiple of ten is a `"-"`. Anticipating, the next parser we see
+inside the `bind` argument starts with `P.string("-")`.  
 
-After the hypen is a `ones` parse.  Here we use `fmap` to caputre the
-result of the `ones` parser in order to add it to the result of the
-`multOfTen` parser.  Here is a summary of the steps:
+After the hypen we want to parse with `ones`.  Here we use `fmap` to
+caputre the result of `ones` in order to add it to the result of
+`multOfTen`.  Here is a summary of the steps:
 
 
-1. `"twenty-five"` becomes `20` after `hypenatedNumber` with `"-five"`
-   leftover, `20` gets bound the `m` in the function argument passed
-   to `bind`.
-2. `P.string(-")` accepts the `"-"` in `"-five"` leaving `"five"` left
-   to parse.
+1. `"twenty-five"` becomes `20` after `multOfTen` with `"-five"`
+   leftover. We bind `20` to `m` in the function argument passed to
+   `bind`.
+2. `P.string("-")` accepts the `"-"` in `"-five"` leaving `"five"`
+   left to parse.
 3. `"five"` becomes `5` after `ones`, and `5` gets bound to `o` in the
    function argument we pass to `fmap`.
-4. finally, we add up `m` and `o` to return `25`.  Note that the type of
+4. finally, we add `m` and `o` to return `25`.  Note that the type of
    `hypenatedNumber` is `Parser<Int>`.
 
-Why did we use `fmap` instead of `bind` after `P.string("-")`? The main
-reason is that we're done with that parser.  We just want to transform
-the output without parsing any more input at this point. However, it
-turns out that `fmap` is implemented in terms of `bind`, so we used it
-afterall!
+Why did we use `fmap` instead of `bind` after `P.string("-")`? The
+main reason is that we're done parsing.  By the time we get to parsing
+the "five" we just want to transform the output without parsing any
+more input. However, it turns out that `fmap` is implemented in terms
+of `bind`, so we used it afterall!
 
 
 ### The output of the example
