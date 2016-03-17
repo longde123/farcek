@@ -529,7 +529,22 @@ class Parser<A> {
     return string( s ).then( result( b ) );
   }
 
+  /**
+     The argument `a` must be of length greater than 1.
+
+     The homogeneous sequence combinator.  Given an array of parsers
+     of the same type, it returns a parser that will parse each in
+     sequence, returning the value parsed by the last parser.  
+
+     Essentially just a shortcut for a sequence of [then](#then)'s.
+    
+   **/
   
+  public static function homSeq<B> (a : Array<Parser<B>> ) : Parser<B> {
+    var f = a.shift();
+    for (p in a) f = f.then(p);
+    return f;
+  }
 
   /**
 
