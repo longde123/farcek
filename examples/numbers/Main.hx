@@ -91,7 +91,7 @@ class Main {
       });
 
     var fullNumber = multipliedNumber.many1().fmap(function (a) {
-	return a.fold(function (a,b) {return a + b;}, 0);
+	return a.fold(function (m,n) {return m + n;}, 0);
       });
 
     return P.run( fullNumber, s);
