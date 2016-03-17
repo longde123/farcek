@@ -15,14 +15,14 @@ python3 main.py
 ### Digging into the example
 
 An educational use of the `bind` and `fmap` combinators occurs in the
-`hypenatedNumber` parser found on line 49 of the example. Its purpose
+`hyphenatedNumber` parser found on line 49 of the example. Its purpose
 is to accept a word like `"twenty-five"` and return the number `25`.
 
 Its definition looks like this:
 
 ```haxe
 
-var hypenatedNumber = multOfTen.bind(function (m) {
+var hyphenatedNumber = multOfTen.bind(function (m) {
 	return P.string("-").then(ones).fmap(function (o) {
 	    return m + o;
 	  });
@@ -31,7 +31,7 @@ var hypenatedNumber = multOfTen.bind(function (m) {
 
 ```
 
-Lets break it down.  The definition of `hypenatedNumber` makes use of
+Lets break it down.  The definition of `hyphenatedNumber` makes use of
 a couple of other parsers that are defined earlier in the file.  
 
 First, the `ones` parser accepts any of the the strings `"one"`
@@ -63,7 +63,7 @@ caputre the result of `ones` in order to add it to the result of
 3. `"five"` becomes `5` after `ones`, and `5` gets bound to `o` in the
    function argument we pass to `fmap`.
 4. finally, we add `m` and `o` to return `25`.  Note that the type of
-   `hypenatedNumber` is `Parser<Int>`.
+   `hyphenatedNumber` is `Parser<Int>`.
 
 Why did we use `fmap` instead of `bind` after `P.string("-")`? The
 main reason is that we're done parsing.  By the time we get to parsing

@@ -46,13 +46,13 @@ class Main {
     var multOfTen = P.choice([twenty, thirty, forty, fifty,
 			      sixty,  seventy, eighty, ninety]);
     
-    var hypenatedNumber = multOfTen.bind(function (m) {
+    var hyphenatedNumber = multOfTen.bind(function (m) {
 	return P.string("-").then(ones).fmap(function (o) {
 	    return m + o;
 	  });
       });
     
-    var number : Parser<Int> = P.choice([hypenatedNumber,
+    var number : Parser<Int> = P.choice([hyphenatedNumber,
 					 multOfTen,
 					 teens,
 					 ones,
