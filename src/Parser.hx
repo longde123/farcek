@@ -85,7 +85,7 @@ class Parser<A> {
 
      For example, `Parser.string("this").then(Parser.string("works"))`
      will parse the string `"thisworks"` and return the string
-     `"thisworks"`.
+     `"works"`.
 
    **/
   
@@ -163,9 +163,9 @@ class Parser<A> {
 
   /**
 
-     `this.tryWithDefault(v)` will simply simply return a parser that
-     returns `v` if `this` fails.  Its implementation uses
-     [plus](#plus) and [result](#result).
+     `this.tryWithDefault(v)` will simply return a parser that returns
+     `v` if `this` fails.  Its implementation uses [plus](#plus) and
+     [result](#result).
 
    **/
   
@@ -519,6 +519,19 @@ class Parser<A> {
 
 
   /**
+     
+     Accepts a string and a value and creates a parser that returns
+     the given value on successful parse of the provided string.
+
+   **/
+
+  public static function stringTo<B> (s : String, b : B) : Parser<B> {
+    return string( s ).then( result( b ) );
+  }
+
+  
+
+  /**
 
      A convenience method to run a parser on a string and return its
      the value of its first successful parse.
@@ -532,5 +545,4 @@ class Parser<A> {
   }
 
 
-  
 }
