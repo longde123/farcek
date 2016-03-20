@@ -152,6 +152,20 @@ class Parser<A> {
   }
 
   /**
+     Makes `this` parser optional, and returns `None` in the case that
+     the parser does not accept the current input. Otherwise, if
+     `this` would have parsed and returned an `a`, `this.ornot()` will
+     parse and return a `Some(a)`.
+     
+   **/
+
+  public function ornot () : Parser<Option<A>> {
+    return fmap(function (r) {
+	return Some(r);
+      }).orelse(None);
+  }
+  
+  /**
 
      The `fmap` method transforms the output of a successful parse.
 
