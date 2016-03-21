@@ -7,7 +7,7 @@
 comibinator library, and its implementation closely follows
 [this paper](http://www.cs.nott.ac.uk/~pszgmh/monparsing.pdf) by
 Hutton and Meijer.  `farcek` lets the programmer define small
-composible parsers that can return language level-values, making
+composible parsers that can return language-level values, making
 `farcek` ideal for things like custom embedded scripting languages or
 string validation.  The library prioritizes for ease of use over
 performance.
@@ -17,7 +17,7 @@ See
 for advanced use. Each example contains a README that goes into some
 depth.
 
-## a small example
+## A Small Example
 
 In the following example, we create a small language for doing
 additive arithmetic.
