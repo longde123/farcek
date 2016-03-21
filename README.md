@@ -12,6 +12,11 @@ composible parsers that can return language level-values, making
 string validation.  The library prioritizes for ease of use over
 performance.
 
+See
+[examples](https://github.com/asciiascetic/farcek/tree/master/examples)
+for advanced use. Each example contains a README that goes into some
+depth.
+
 ## a small example
 
 In the following example, we create a small language for doing
