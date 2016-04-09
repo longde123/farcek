@@ -4,9 +4,9 @@
   "license": "MIT",
   "tags": ["parsers"],
   "description": "A simple parser combinator class inspired by Parsec.",
-  "version": "1.1.5",
+  "version": "1.2.0",
   "classPath": "src/",
-  "releasenote": "added the ornot() method",
+  "releasenote": "added rudimentary error reporting via the `strict` method",
   "contributors": ["asciiascetic"],
   "dependencies": {}
 }
