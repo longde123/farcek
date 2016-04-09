@@ -10,6 +10,10 @@ type alias for `{parsed: A, leftOver: String}`
 
 **/
 
+enum ParseError {
+  ParseError( s : String );
+}
+
 typedef Parsed<A> = {parsed : A, leftOver : String}
 
 class Parser<A> {
@@ -42,6 +46,39 @@ class Parser<A> {
     parser = p;
   }
 
+  /**
+     
+     `strict` is used when you desire throw an error on a failed parse
+     at a point.  The error is an enum:
+
+     `ParseError( s : String)` 
+
+     where `s` is the offending string.  This is useful for getting
+     some feedback about where in your parse string you went wrong.
+
+     It should be noted that the `strict` parse is not always
+     desirable.  For instance doing
+     `myparser.strict().or( myotherparser )` is generally a bad idea.
+     If `myparser` fails an error will be thrown instead of moving on
+     to `myotherparser` as expected.  It would be better to do:
+
+     `myparser.or( myotherparser ).strict()`, which will ensure that
+     an error is thrown when neither parser parses.  Even so, `strict`
+     should be used with caution.
+     
+
+
+   **/
+
+  public function strict () : Parser<A> {
+    var that = this;
+    return new Parser(function (s) {
+	var results = that.parse( s );
+	if (results.length == 0) throw ParseError( s );
+	return results;
+      });
+  }
+  
   /**
 
      The `bind` method is the bread and butter of so-called "monadic"
