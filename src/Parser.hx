@@ -1,5 +1,6 @@
 
 import haxe.ds.Option;
+import haxe.ds.Either;
 
 using Lambda; 
 
@@ -11,7 +12,8 @@ type alias for `{parsed: A, leftOver: String}`
 **/
 
 enum ParseError {
-  ParseError( s : String );
+  NoParseAt( s : String );
+  EmptyParse;
 }
 
 typedef Parsed<A> = {parsed : A, leftOver : String}
@@ -51,7 +53,7 @@ class Parser<A> {
      `strict` is used when you desire throw an error on a failed parse
      at a point.  The error is an enum:
 
-     `ParseError( s : String)` 
+     `NoParseAt( s : String)` 
 
      where `s` is the offending string.  This is useful for getting
      some feedback about where in your parse string you went wrong.
@@ -74,7 +76,7 @@ class Parser<A> {
     var that = this;
     return new Parser(function (s) {
 	var results = that.parse( s );
-	if (results.length == 0) throw ParseError( s );
+	if (results.length == 0) throw NoParseAt( s );
 	return results;
       });
   }
@@ -611,4 +613,12 @@ class Parser<A> {
   }
 
 
+  public static function runE<B> (p : Parser<B>, s : String) : Either<ParseError,B> {
+    try {
+      var res = p.parse( s );
+      return if (res.length == 0) Left( EmptyParse ) else Right( res[0].parsed );
+    } catch (e : ParseError) {
+      return Left( e );
+    }
+  }
 }
