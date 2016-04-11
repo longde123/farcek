@@ -1,6 +1,6 @@
 
 using Lambda;
-import Parser as P;
+import farcek.Parser as P;
 
 class Main {
 

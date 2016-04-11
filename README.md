@@ -24,7 +24,7 @@ additive arithmetic.
 
 ```haxe
    
-import Parser;
+import farcek.Parser;
 
 class Main {
   public static function main () {

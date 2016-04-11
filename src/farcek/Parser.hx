@@ -1,3 +1,4 @@
+package farcek;
 
 import haxe.ds.Option;
 import haxe.ds.Either;
