@@ -601,6 +601,27 @@ class Parser<A> {
   }
 
   /**
+     Just a helper function that takes a word and wraps it in a called
+     to `spaceBracket`.  Handy for defining keywords.
+
+   **/
+
+  public static function kwd (s : String) : Parser<String> {
+    return spaceBracket( string( s ) );
+  }
+
+  /**
+
+     When one of several keywords will do.  `altKwds` wraps a call to
+     `stringChoice` in  a `spaceBracket`.  See `kwd` too.
+
+   **/
+
+  public static function altKwds (a : Array<String>) : Parser<String> {
+    return spaceBracket( stringChoice( a ) );
+  }
+  
+  /**
 
      A convenience method to run a parser on a string and return its
      the value of its first successful parse.
