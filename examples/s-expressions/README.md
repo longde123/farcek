@@ -8,7 +8,7 @@ Here is an example that parses strings like
 ((1) (a b) 3 "tres cool")
 ```
 
-And returns that look like:
+And returns structures that look like:
 
 ```haxe
 
