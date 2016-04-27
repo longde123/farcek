@@ -4,9 +4,9 @@
   "license": "MIT",
   "tags": ["parsers"],
   "description": "A simple parser combinator class inspired by Parsec.",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "classPath": "src/",
-  "releasenote": "added kwd and altKwds methods",
+  "releasenote": "added lazyPlus method and nested static method for building a particular class of recursive parsers",
   "contributors": ["asciiascetic"],
   "dependencies": {}
 }
