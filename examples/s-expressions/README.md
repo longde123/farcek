@@ -5,7 +5,7 @@ A Parser for S-Expressions
 Here is an example that parses strings like
 
 ```
-'((1) (a b) 3 "tres cool")'
+((1) (a b) 3 "tres cool")
 ```
 
 And returns parses that look like:
