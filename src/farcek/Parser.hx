@@ -163,6 +163,13 @@ class Parser<A> {
   }
 
 
+  /**
+     `lazyPlus` is like `plus` except that it accepts a thunk instead
+     of a parser, and only evaluates if `this` parse returned no
+     results.
+
+   **/
+
   public function lazyPlus (thunk: Void -> Parser<A>) : Parser<A> {
     return new Parser(function (s) {
 	var res = this.parse(s);
