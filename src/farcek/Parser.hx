@@ -151,6 +151,8 @@ class Parser<A> {
      `Parser.string("a").plus( Parser.string("an") )` will parse
      either English indefinite article.
 
+     
+
    **/
   
   public function plus (p2: Parser<A>) : Parser<A> {
@@ -160,6 +162,15 @@ class Parser<A> {
       });
   }
 
+
+  public function lazyPlus (thunk: Void -> Parser<A>) : Parser<A> {
+    return new Parser(function (s) {
+	var res = this.parse(s);
+	if (res.length > 0) return res;
+	return thunk().parse(s);
+      });
+  }
+  
   /**
 
      The `many` method will run `this` parser zero or more times and
@@ -600,6 +611,22 @@ class Parser<A> {
     return f;
   }
 
+
+  public static function nested<Z> (o: Parser<String>, c: Parser<String>,
+				    p: Parser<Z>, comb: Array<Z> -> Z) :Parser<Z> {
+    var rec = function () { return nested(o,c,p,comb);};
+    
+    var closer = function (ignore) {
+      return p.lazyPlus(rec).many().bind(function (az) {
+	  return c.then(result( comb(az)));
+	});
+    };
+
+    return o.bind(closer);
+    
+  }
+
+  
   /**
      Just a helper function that takes a word and wraps it in a called
      to `spaceBracket`.  Handy for defining keywords.
