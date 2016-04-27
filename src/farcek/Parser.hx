@@ -611,6 +611,16 @@ class Parser<A> {
     return f;
   }
 
+  /**
+
+     `nested` makes use of `lazyPlus` to facilitate nested parses.
+
+     A nested parse begins with a parse according to `o`. Next, zero
+     or more *p* or recursive alls to `nested` are parsed until a `c`
+     is parsed.  At that point the collected `Z` are combined with
+     `comb`.  
+
+   **/
 
   public static function nested<Z> (o: Parser<String>, c: Parser<String>,
 				    p: Parser<Z>, comb: Array<Z> -> Z) :Parser<Z> {
