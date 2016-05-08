@@ -619,6 +619,14 @@ class Parser<A> {
   }
 
   /**
+     an alias for `homSeq`
+   **/
+
+  public static function seq<B> (a : Array<Parser<B>>) : Parser<B> {
+    return homSeq( a );
+  }
+  
+  /**
 
      `nested` makes use of `lazyPlus` to facilitate nested parses.
 
