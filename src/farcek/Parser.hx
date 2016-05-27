@@ -133,6 +133,18 @@ class Parser<A> {
     return bind(function (a) {return p;});
   }
 
+
+  /**
+
+     `thento(p)` returns `p` whenever `this` parses, effectively
+     ignoring the parsed value of `this`.  It is a shortcut for
+     `this.then( result( b) )`.
+  **/
+
+  public function thento<B> (b : B) : Parser<B> {
+    return then( result( b ));
+  }
+  
   /**
      `or` is an alias for [plus](#plus).
    **/
