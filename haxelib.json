@@ -4,9 +4,9 @@
   "license": "MIT",
   "tags": ["parsers"],
   "description": "A simple parser combinator class inspired by Parsec.",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "classPath": "src/",
-  "releasenote": "added Parser.thento method",
+  "releasenote": "added `Parser.kwdSeq` static method",
   "contributors": ["asciiascetic"],
   "dependencies": {}
 }
