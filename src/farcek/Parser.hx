@@ -684,6 +684,18 @@ class Parser<A> {
   public static function altKwds (a : Array<String>) : Parser<String> {
     return spaceBracket( stringChoice( a ) );
   }
+
+  /**
+     
+     Take a string and produce a parser that will parse the string as
+     a sequence of keywords. I.e. will `spaceBracket` the words in the
+     string.
+
+   **/
+
+  public static function kwdSeq (s : String) {
+    return seq( s.split(" ").map( kwd ));
+  }
   
   /**
 
