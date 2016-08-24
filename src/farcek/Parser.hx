@@ -170,10 +170,10 @@ class Parser<A> {
   public function plus (p2: Parser<A>) : Parser<A> {
     var that = this;
     return new Parser(function (s) {
-	return that.parse(s).concat( p2.parse(s) );
+	var parsed = that.parse(s);
+	return if (parsed.length > 0) parsed else p2.parse( s );
       });
   }
-
 
   /**
      `lazyPlus` is like `plus` except that it accepts a thunk instead
@@ -343,9 +343,13 @@ class Parser<A> {
   
   // assumes that a.length > 0
   public static function choice<B> (a : Array<Parser<B>>) : Parser<B> {
-    var f = a.shift();
-    for (p in a) f = f.plus(p);
-    return f;
+    return new Parser(function (s) {
+	for (p in a) {
+	  var res = p.parse( s );
+	  if (res.length > 0) return res;
+	}
+	return [];
+      });
   }
 
   /**
