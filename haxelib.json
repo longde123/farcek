@@ -4,9 +4,9 @@
   "license": "MIT",
   "tags": ["parsers"],
   "description": "A simple parser combinator class inspired by Parsec.",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "classPath": "src/",
-  "releasenote": "added `Parser.kwdSeq` static method",
+  "releasenote": "improved efficiency of Parser.plus and Parser.choice",
   "contributors": ["asciiascetic"],
   "dependencies": {}
 }
