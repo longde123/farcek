@@ -101,10 +101,10 @@ class Parser<A> {
   
   public function bind<B> (f : A -> Parser<B>) : Parser<B> {
     return new Parser(function (s) {
-	var results = [];
-	for (p in parse(s))
-	  results = results.concat ( (f(p.parsed)).parse (p.leftOver) );
-	return results;
+	var parsed = parse( s );
+	return if (parsed.length > 0)
+	  f( parsed[0].parsed ).parse( parsed[0].leftOver )
+	  else [];
       });
   }
 
@@ -198,6 +198,7 @@ class Parser<A> {
    **/
   
   public function many () : Parser<Array<A>> {
+
     var rep = bind( function ( r ) {
 	return many().bind(function ( rs ) {
 	    return result([r].concat( rs ));
