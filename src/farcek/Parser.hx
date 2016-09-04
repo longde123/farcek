@@ -12,15 +12,14 @@ type alias for `{parsed: A, leftOver: String}`
 
 **/
 
-enum ParseError {
-  NoParseAt( s : String );
-  EmptyParse;
-}
+typedef ParseError = {onInput : String, atChar : Int};
 
 typedef Parsed<A> = {parsed : A, leftOver : String}
 
 class Parser<A> {
 
+  private static var mostRecentInput : String;
+  
   private var parser : String -> Array<Parsed<A>>;
 
   /**
@@ -34,6 +33,7 @@ class Parser<A> {
   **/
   
   public function parse(s) {
+    mostRecentInput = s;
     return parser(s);
   }
 
@@ -49,39 +49,6 @@ class Parser<A> {
     parser = p;
   }
 
-  /**
-     
-     `strict` is used when you desire throw an error on a failed parse
-     at a point.  The error is an enum:
-
-     `NoParseAt( s : String)` 
-
-     where `s` is the offending string.  This is useful for getting
-     some feedback about where in your parse string you went wrong.
-
-     It should be noted that the `strict` parse is not always
-     desirable.  For instance doing
-     `myparser.strict().or( myotherparser )` is generally a bad idea.
-     If `myparser` fails an error will be thrown instead of moving on
-     to `myotherparser` as expected.  It would be better to do:
-
-     `myparser.or( myotherparser ).strict()`, which will ensure that
-     an error is thrown when neither parser parses.  Even so, `strict`
-     should be used with caution.
-     
-
-
-   **/
-
-  public function strict () : Parser<A> {
-    var that = this;
-    return new Parser(function (s) {
-	var results = that.parse( s );
-	if (results.length == 0) throw NoParseAt( s );
-	return results;
-      });
-  }
-  
   /**
 
      The `bind` method is the bread and butter of so-called "monadic"
@@ -717,11 +684,22 @@ class Parser<A> {
 
 
   public static function runE<B> (p : Parser<B>, s : String) : Either<ParseError,B> {
-    try {
-      var res = p.parse( s );
-      return if (res.length == 0) Left( EmptyParse ) else Right( res[0].parsed );
-    } catch (e : ParseError) {
-      return Left( e );
-    }
+    var res = p.parse( s );
+    return if (res.length == 0) Left( {onInput:s, atChar:s.length - mostRecentInput.length} )
+      else Right( res[0].parsed );
   }
+
+  public static function traceError (e : ParseError, ?winSize : Int = 20) {
+    var low = Std.int(Math.max( 0, e.atChar-winSize ));
+    var max = Std.int(Math.min( e.onInput.length, e.atChar+winSize ));
+    var idx = e.atChar - low;
+    var lineNo = 0;
+    for (i in 0...e.onInput.length) if (e.onInput.charAt(i) == '\n') lineNo += 1;
+    trace('Parse Error on line $lineNo');
+    var window = '...' + e.onInput.substring(low,max) + '...';
+    var arrow = '   ' + [for (j in 0...idx-1) ' '].join('') + '^\n\n';
+    trace(window);
+    trace(arrow);
+  }
+  
 }

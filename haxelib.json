@@ -4,9 +4,9 @@
   "license": "MIT",
   "tags": ["parsers"],
   "description": "A simple parser combinator class inspired by Parsec.",
-  "version": "1.4.4",
+  "version": "1.5.0",
   "classPath": "src/",
-  "releasenote": "improved efficiency of Parser.bind! Big difference!",
+  "releasenote": "added realer error reporting with Parser.runE, changed the API by removing Parser.strict instance method.",
   "contributors": ["asciiascetic"],
   "dependencies": {}
 }
