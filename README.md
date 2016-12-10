@@ -9,7 +9,7 @@ comibinator library, and its implementation closely follows
 Hutton and Meijer.  `farcek` lets the programmer define small
 composible parsers that can return language-level values, making
 `farcek` ideal for things like custom embedded scripting languages or
-string validation.  The library prioritizes for ease of use over
+string validation.  The library prioritizes for ease of use ~~over~~ *and*
 performance.
 
 See
